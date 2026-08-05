@@ -13,7 +13,15 @@ A React app for ASAREN Star Ranking system using Firebase as the database.
    - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/).
    - Enable Firestore Database.
    - Get your Firebase config from Project Settings > General > Your apps > Web app.
-   - Update `src/firebase.ts` with your config.
+  - Copy `.env.example` to `.env`.
+  - Set these values in `.env`:
+    - `VITE_FIREBASE_API_KEY`
+    - `VITE_FIREBASE_AUTH_DOMAIN`
+    - `VITE_FIREBASE_PROJECT_ID`
+    - `VITE_FIREBASE_STORAGE_BUCKET`
+    - `VITE_FIREBASE_MESSAGING_SENDER_ID`
+    - `VITE_FIREBASE_APP_ID`
+    - `VITE_FIREBASE_MEASUREMENT_ID` (optional)
 
 3. Add sample data to Firestore:
    - Collection: `players`

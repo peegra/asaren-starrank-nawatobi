@@ -30,11 +30,11 @@ function App() {
 
   return (
     <div className="app min-h-screen flex flex-col">
-      <div className="flex items-center justify-center" style={{ marginTop: '12px', marginBottom: '12px' }}>
+      <div className="logo-wrap flex items-center justify-center" style={{ marginTop: '10px', marginBottom: '8px' }}>
         <img
-          src={`${import.meta.env.BASE_URL}stacle.png`}
-          alt="STACLE"
-          style={{ maxWidth: '720px', height: 'auto' }}
+          src={`${import.meta.env.BASE_URL}logo-nawatobi.png`}
+          alt="NAWATOBI"
+          className="main-logo"
         />
       </div>
       <div className="tabs">
