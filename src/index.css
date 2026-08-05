@@ -1,0 +1,588 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- asaren-games 風デザイントークン --- */
+:root {
+  --color-bg: #ffe066;
+  --color-surface: rgba(255, 255, 255, 0.98);
+  --color-primary: #ff2d1a;
+  --color-primary-strong: #ff5a2a;
+  --color-accent: #1f6bff;
+  --color-accent-strong: #00b8ff;
+  --color-highlight: #ffd100;
+  --color-text: #1b1b1b;
+  --color-muted: #4c5561;
+  --radius-lg: 18px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+  --shadow-soft: 0 24px 58px rgba(255, 45, 26, 0.28);
+  --shadow-card: 0 18px 45px rgba(37, 42, 62, 0.18);
+  --shadow-focus: 0 0 0 4px rgba(31, 107, 255, 0.45);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+/* --- アニメーション --- */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 18px rgba(59, 109, 224, 0.55), 0 0 36px rgba(47, 134, 255, 0.35), 0 16px 38px rgba(229, 37, 33, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(59, 109, 224, 0.85), 0 0 60px rgba(47, 134, 255, 0.55), 0 0 80px rgba(229, 37, 33, 0.35), 0 16px 38px rgba(47, 134, 255, 0.35);
+  }
+}
+
+@keyframes pulse-glow-bronze {
+  0%, 100% {
+    transform: scale(var(--pulse-scale, 1));
+    box-shadow: 0 0 25px rgba(180, 83, 9, 0.7), 0 0 50px rgba(180, 83, 9, 0.5), 0 0 75px rgba(180, 83, 9, 0.3), 0 16px 38px rgba(180, 83, 9, 0.42);
+  }
+  50% {
+    transform: scale(calc(var(--pulse-scale, 1) * 1.03));
+    box-shadow: 0 0 40px rgba(180, 83, 9, 1), 0 0 80px rgba(180, 83, 9, 0.8), 0 0 120px rgba(180, 83, 9, 0.5), 0 16px 38px rgba(180, 83, 9, 0.42);
+  }
+}
+
+@keyframes pulse-glow-silver {
+  0%, 100% {
+    transform: scale(var(--pulse-scale, 1));
+    box-shadow: 0 0 25px rgba(209, 213, 219, 0.9), 0 0 50px rgba(209, 213, 219, 0.6), 0 0 75px rgba(156, 163, 175, 0.4), 0 16px 38px rgba(156, 163, 175, 0.42);
+  }
+  50% {
+    transform: scale(calc(var(--pulse-scale, 1) * 1.03));
+    box-shadow: 0 0 40px rgba(255, 255, 255, 1), 0 0 80px rgba(209, 213, 219, 1), 0 0 120px rgba(209, 213, 219, 0.7), 0 16px 38px rgba(156, 163, 175, 0.42);
+  }
+}
+
+@keyframes pulse-glow-gold {
+  0%, 100% {
+    transform: scale(var(--pulse-scale, 1));
+    box-shadow: 0 0 25px rgba(251, 191, 36, 0.8), 0 0 50px rgba(251, 191, 36, 0.6), 0 0 75px rgba(245, 158, 11, 0.4), 0 16px 38px rgba(245, 158, 11, 0.42);
+  }
+  50% {
+    transform: scale(calc(var(--pulse-scale, 1) * 1.03));
+    box-shadow: 0 0 40px rgba(255, 223, 0, 1), 0 0 80px rgba(251, 191, 36, 1), 0 0 120px rgba(251, 191, 36, 0.7), 0 16px 38px rgba(245, 158, 11, 0.42);
+  }
+}
+
+@keyframes firework {
+  0% {
+    transform: translate(0, 0) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes celebration-burst {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes celebration-center {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(3);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(5);
+    opacity: 0;
+  }
+}
+
+@keyframes celebration-flash {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  30% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@layer base {
+  body {
+    font-family: "Segoe UI", "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    background:
+      radial-gradient(95% 95% at 10% 10%, rgba(255, 45, 26, 0.55), transparent 60%),
+      radial-gradient(95% 95% at 90% 0%, rgba(31, 107, 255, 0.5), transparent 60%),
+      radial-gradient(95% 95% at 50% 100%, rgba(255, 209, 0, 0.55), transparent 60%),
+      radial-gradient(85% 85% at 85% 85%, rgba(0, 200, 83, 0.45), transparent 60%),
+      repeating-linear-gradient(90deg, rgba(255, 45, 26, 0.2) 0 24px, rgba(31, 107, 255, 0.2) 24px 48px, rgba(255, 209, 0, 0.2) 48px 72px),
+      var(--color-bg);
+    background-repeat: repeat;
+    background-size: 520px 520px, 520px 520px, 520px 520px, 460px 460px, 180px 180px, 100% 100%;
+    color: var(--color-text);
+    line-height: 1.6;
+    font-size: clamp(1.4rem, 4vw, 1.6rem);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 {
+    margin: 0;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  p {
+    margin: 0;
+  }
+
+  button {
+    font: inherit;
+  }
+}
+
+/* --- レイアウト --- */
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 16px 24px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  flex: 1;
+  min-height: 100%;
+}
+
+/* --- タブ --- */
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+  width: 100%;
+  margin: 0 0 6px;
+}
+
+.tab-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 45, 26, 0.3);
+  color: var(--color-text);
+  font-weight: 700;
+  font-size: clamp(1.2rem, 3.2vw, 1.4rem);
+  letter-spacing: 0.01em;
+  box-shadow: 0 12px 26px rgba(255, 45, 26, 0.2);
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+  min-height: 80px;
+}
+
+.tab-button.is-active {
+  background: rgba(255, 209, 0, 0.9);
+  color: var(--color-text);
+  box-shadow: 0 22px 44px rgba(255, 45, 26, 0.35);
+  border-color: rgba(255, 45, 26, 0.45);
+}
+
+.tab-button:hover,
+.tab-button:focus {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-focus);
+  outline: none;
+  border-color: rgba(59, 109, 224, 0.45);
+}
+
+.tab-button:active {
+  transform: translateY(0);
+}
+
+/* --- カード（ガラスモーフィズム）--- */
+.card {
+  width: 100%;
+  padding: clamp(16px, 5vw, 20px);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(255, 236, 170, 0.92));
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(255, 45, 26, 0.22);
+  backdrop-filter: blur(18px);
+}
+
+.card-title {
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  text-align: center;
+  text-shadow: 0 0 16px rgba(59, 109, 224, 0.32);
+  margin-bottom: 0.8rem;
+}
+
+.section-title {
+  font-size: clamp(1.4rem, 3.8vw, 1.6rem);
+  color: #1f6bff;
+  font-weight: 600;
+  text-shadow: 0 0 12px rgba(47, 134, 255, 0.28);
+  margin-bottom: 0.6rem;
+}
+
+/* --- フォーム --- */
+.pill-input {
+  border: 1px solid rgba(59, 109, 224, 0.25);
+  border-radius: 999px;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  font-size: clamp(1.3rem, 3.5vw, 1.5rem);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--color-text);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.pill-input::placeholder {
+  color: var(--color-muted);
+}
+
+.pill-input:focus {
+  outline: none;
+  border-color: var(--color-accent-strong);
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 0 4px rgba(59, 109, 224, 0.2);
+}
+
+.input-file {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  border: 1px dashed rgba(59, 109, 224, 0.35);
+  background: rgba(59, 109, 224, 0.08);
+  color: var(--color-muted);
+  font-size: clamp(0.95rem, 3vw, 1.1rem);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.input-file:hover,
+.input-file:focus {
+  border-color: var(--color-accent);
+  background: rgba(59, 109, 224, 0.14);
+  outline: none;
+}
+
+/* --- ボタン --- */
+.primary-button,
+.secondary-button,
+.text-button {
+  border-radius: var(--radius-lg);
+  border: none;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.primary-button {
+  padding: 0.9rem 1.4rem;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: clamp(1.3rem, 3.5vw, 1.5rem);
+  box-shadow: 0 16px 38px rgba(229, 37, 33, 0.25);
+  text-shadow: 0 0 14px rgba(47, 134, 255, 0.35);
+}
+
+.primary-button:hover,
+.primary-button:focus {
+  background: var(--color-primary-strong);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.secondary-button {
+  padding: 0.9rem 1.4rem;
+  background: rgba(31, 107, 255, 0.16);
+  color: var(--color-text);
+  border: 1px solid rgba(31, 107, 255, 0.4);
+  font-size: clamp(1.3rem, 3.5vw, 1.5rem);
+  text-shadow: 0 0 14px rgba(59, 109, 224, 0.25);
+}
+
+.secondary-button:hover,
+.secondary-button:focus {
+  background: rgba(31, 107, 255, 0.28);
+  transform: translateY(-2px);
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+.text-button {
+  padding: 0.7rem 1.2rem;
+  background: transparent;
+  color: var(--color-accent);
+  font-size: clamp(0.95rem, 3vw, 1.1rem);
+}
+
+.text-button:hover,
+.text-button:focus {
+  background: rgba(59, 109, 224, 0.12);
+  outline: none;
+}
+
+/* --- リスト・行 --- */
+.list-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 246, 214, 0.85));
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid rgba(229, 37, 33, 0.1);
+  backdrop-filter: blur(16px);
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius-md);
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(59, 109, 224, 0.2);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.list-item:hover {
+  border-color: rgba(59, 109, 224, 0.35);
+}
+
+/* --- 選択チップ（ミッション選択など）--- */
+.chip-button {
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-md);
+  border: 2px solid rgba(59, 109, 224, 0.35);
+  background: rgba(255, 255, 255, 0.95);
+  font-weight: 700;
+  font-size: clamp(1.2rem, 3.2vw, 1.4rem);
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.chip-button:hover,
+.chip-button:focus {
+  transform: translateY(-2px);
+  outline: none;
+  border-color: rgba(59, 109, 224, 0.55);
+}
+
+.chip-button.is-selected {
+  background: rgba(255, 209, 0, 0.9);
+  color: var(--color-text);
+  border-color: rgba(255, 45, 26, 0.5);
+  box-shadow: 0 24px 48px rgba(255, 45, 26, 0.38);
+}
+
+
+
+/* --- スター数バッジ --- */
+.stat-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(59, 109, 224, 0.2);
+  min-width: 56px;
+}
+
+.stat-pill .value {
+  font-size: clamp(1.2rem, 4vw, 1.5rem);
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(59, 109, 224, 0.3);
+}
+
+.stat-pill .label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.stat-pill.gold .value { color: #F5C542; text-shadow: 0 0 10px rgba(245,197,66,0.5); }
+.stat-pill.silver .value { color: #7ad9ff; text-shadow: 0 0 10px rgba(122,217,255,0.6); }
+.stat-pill.bronze .value { color: #ff7a2a; text-shadow: 0 0 10px rgba(255,122,42,0.6); }
+
+/* --- ミッションの Gold/Silver/Bronze ブロック --- */
+.achievement-block {
+  padding: 1rem 1.2rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(229, 37, 33, 0.18);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.achievement-block h3 {
+  font-size: clamp(1rem, 3.2vw, 1.15rem);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.achievement-block ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.achievement-block li {
+  padding: 0.15rem 0;
+}
+
+/* --- モーダルオーバーレイ --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 242, 204, 0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* --- ユーティリティ --- */
+.d-none {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  .app {
+    max-width: 1040px;
+    padding: clamp(24px, 4vw, 36px) 32px 48px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app {
+    max-width: 1120px;
+  }
+}
+
+@keyframes star-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes bounce-in {
+  0% { transform: scale(0.9); opacity: 0; }
+  60% { transform: scale(1.02); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-star-pulse {
+  animation: star-pulse 1.5s ease-in-out infinite;
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.4s ease-out;
+}
+
+/* --- 爆発的なクリア演出 --- */
+.celebration-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.celebration-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(229, 37, 33, 1), rgba(59, 109, 224, 0.8), transparent);
+  animation: celebration-center 0.8s ease-out forwards;
+  box-shadow: 0 0 80px rgba(229, 37, 33, 1), 0 0 160px rgba(59, 109, 224, 0.8), 0 0 240px rgba(229, 37, 33, 0.6);
+}
+
+.celebration-flash {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(229, 37, 33, 0.3), rgba(59, 109, 224, 0.28), transparent 70%);
+  animation: celebration-flash 0.8s ease-out forwards;
+}
+
+.celebration-particle {
+  position: absolute;
+  border-radius: 50%;
+  animation: celebration-burst ease-out forwards;
+  box-shadow: 0 0 20px currentColor, 0 0 40px currentColor, 0 0 60px currentColor;
+  filter: blur(1px);
+}
+
+.celebration-particle-small {
+  box-shadow: 0 0 15px currentColor, 0 0 30px currentColor;
+  filter: blur(0.5px);
+}
+
+.celebration-star {
+  position: absolute;
+  animation: celebration-burst ease-out forwards;
+  text-shadow: 0 0 15px currentColor, 0 0 30px currentColor, 0 0 45px currentColor, 0 0 60px currentColor;
+  font-weight: bold;
+  filter: drop-shadow(0 0 12px currentColor);
+}
+
+.celebration-sparkle {
+  position: absolute;
+  animation: celebration-burst 1.5s ease-out forwards;
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ffd166, 0 0 40px #ffd166;
+  filter: drop-shadow(0 0 8px #ffd166);
+}
