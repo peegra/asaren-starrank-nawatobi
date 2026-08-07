@@ -1,7 +1,7 @@
 import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import { db } from "./firebase";
 
-const DEFAULT_NO_IMAGE_URL = "/asaren-starrank/noimage.png";
+const DEFAULT_NO_IMAGE_URL = "/asaren-starrank-nawatobi/noimage.png";
 
 async function updatePlayersNoImage() {
   const playersRef = collection(db, "players");
