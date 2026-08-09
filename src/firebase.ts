@@ -13,6 +13,23 @@ const firebaseConfig = {
   measurementId: env.VITE_FIREBASE_MEASUREMENT_ID || ""
 };
 
+const requiredFirebaseKeys: Array<keyof typeof firebaseConfig> = [
+  "apiKey",
+  "authDomain",
+  "projectId",
+  "storageBucket",
+  "messagingSenderId",
+  "appId",
+];
+
+const missingFirebaseKeys = requiredFirebaseKeys.filter((key) => !firebaseConfig[key]);
+if (missingFirebaseKeys.length > 0) {
+  console.error(
+    `[firebase] Missing required Firebase config: ${missingFirebaseKeys.join(", ")}. ` +
+      "For GitHub Pages, set VITE_FIREBASE_* in GitHub Actions Secrets."
+  );
+}
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
